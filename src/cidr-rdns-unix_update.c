@@ -44,7 +44,7 @@
 typedef struct {
 	char ip_cstr[18];
 	uint32_t ip;
-	char hostname[128];
+	char hostname[256];
 	void *n;
 } list_struct;
 
@@ -137,7 +137,8 @@ void dump_results(char *file) {
 	FILE *f=fopen(file, "a+");
 	if(f) {
 		for(p=IPS; p!=NULL; p=p->n) {
-			fprintf(f, "%s -> (%s)\n", p->ip_cstr, p->hostname);
+			if(p->hostname[0] != '.')
+				fprintf(f, "%s -> (%s)\n", p->ip_cstr, p->hostname);
 		}
 		fclose(f);
 	} else
